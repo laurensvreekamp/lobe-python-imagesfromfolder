@@ -12,7 +12,7 @@ make sure you have deleted the ".DS_Store" file in the 'imgs' folder
 You can do this by running this command in your Terminal:
 rm .DS_Store
 
-Here's the script:
+# Here's the script:
 
 import os # You need this import in order to read the images from the folder
 
@@ -22,7 +22,7 @@ from lobe import ImageModel #the model you've trained using Lobe.ai and exported
 
 model = ImageModel.load('')
 
-# create the CSV file to write the image- & prediction-dat into
+#create the CSV file to write the image- & prediction-dat into
 with open('predictions/predictions.csv', 'w') as file:
 	writer = csv.writer(file)
 	writer.writerow(["imgId", "imagePath", "labeledAs", "confidenceScore"])
