@@ -12,7 +12,7 @@ make sure you have deleted the ".DS_Store" file in the 'imgs' folder
 You can do this by running this command in your Terminal:
 rm .DS_Store
 
-# Here's the script:
+Here's the script:
 
 import os #You need this import in order to read the images from the folder
 import csv #to create the CSV file
