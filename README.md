@@ -1,16 +1,18 @@
 # lobe-python-imagesfromfolder
-# Multiple image prediction + CSV output
+Multiple image prediction + CSV output
 
-# What this Python script does:
-# - it reads all images (only JPG-file format) from a specified folder, 
-# - classifies & scores each image based on your Lobe-trained CV model, 
-# - creates a CSV file 
-# - adds a row for each image, containing the prediction data for that image
+What this Python script does:
+ - it reads all images (only JPG-file format) from a specified folder, 
+ - classifies & scores each image based on your Lobe-trained CV model, 
+ - creates a CSV file 
+ - adds a row for each image, containing the prediction data for that image
 
-# For Mac users: before you run this script,
-# make sure you have deleted the ".DS_Store" file in the 'imgs' folder
-# You can do this by running this command in your Terminal:
-# rm .DS_Store
+For Mac users: before you run this script,
+make sure you have deleted the ".DS_Store" file in the 'imgs' folder
+You can do this by running this command in your Terminal:
+rm .DS_Store
+
+Here's the script:
 
 import os # You need this import in order to read the images from the folder
 
