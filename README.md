@@ -14,13 +14,18 @@ rm .DS_Store
 
 Here's the script:
 
-import os #You need this import in order to read the images from the folder
-import csv #to create the CSV file
-from lobe import ImageModel #the model you've trained using Lobe.ai and exported choosing 'TensorFlow, Use your model in a Python app'
+#You need this import in order to read the images from the folder
+import os 
 
+#to create the CSV file
+import csv 
+
+#the model you've trained using Lobe.ai and exported choosing 'TensorFlow, Use your model in a Python app'
+
+from lobe import ImageModel 
 model = ImageModel.load('')
 
-#create the CSV file to write the image- & prediction-dat into
+# create the CSV file to write the image- & prediction-dat into
 with open('predictions/predictions.csv', 'w') as file:
 	writer = csv.writer(file)
 	writer.writerow(["imgId", "imagePath", "labeledAs", "confidenceScore"])
