@@ -2,10 +2,10 @@
 Multiple image prediction + CSV output + sort copy of the images into labeled folders
 
 What this Python script does:
-01. Batch process a folder with JPG-images
-02. Label each image based on your Lobe-trained CV model and assign a confidence score (for that label)
-03 Create separate folders based on the labels you used in your model
-04 Copy every image to the labeled folder after classifying
+1. Batch process a folder with JPG-images
+2. Label each image based on your Lobe-trained CV model and assign a confidence score (for that label)
+3. Create separate folders based on the labels you used in your model
+4. Copy every image to the labeled folder after classifying
 
 For Mac users: before you run this script:
 1. Create a folder called 'predictions': this is where the newly created/updated CSV-file goes.
