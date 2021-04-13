@@ -2,11 +2,11 @@
 Multiple image prediction + CSV output + sort copy of the images into labeled folders
 
 What this Python script does:
-# 01. Batch process a folder with JPG-images
-# 02. Label each image based on your Lobe-trained CV model
-# 02a - assign a label and confidence score (for that label)
-# 03 Create separate folders based on the labels you used in your model
-# 04 Copy every image to the labeled folder after classifying
+	# 01. Batch process a folder with JPG-images
+	# 02. Label each image based on your Lobe-trained CV model
+	# 02a - assign a label and confidence score (for that label)
+	# 03 Create separate folders based on the labels you used in your model
+	# 04 Copy every image to the labeled folder after classifying
 
 For Mac users: before you run this script:
 1. Create a folder called 'predictions': this is where the newly created/updated CSV-file goes.
@@ -22,45 +22,43 @@ You can do this by running this command in your Terminal: rm .DS_Store
 # used for copying images to the designated predicted label-folders
 	import shutil 
 
-# this is the folder you have to create, where your testset images go
-# you can change 'imgs' to any name you desire
-path1 = "imgs"   
+# this is the folder you have to create, where your testset images go you can change 'imgs' to any name you desire
+	path1 = "imgs"   
 
 
 # to sort the files into their label-destination folders
-def copyFilesToDestLabelFolders(sourceFile, destination):
-    # Copy file to another directory
-    newPath = shutil.copy(sourceFile, destination)
-    print("Path of copied file : ", newPath)
+	def copyFilesToDestLabelFolders(sourceFile, destination):
+	    # Copy file to another directory
+	    newPath = shutil.copy(sourceFile, destination)
+	    print("Path of copied file : ", newPath)
 
 # define the name of the directory to be created
-def makeLabelDirs(whichLabel):
-    print("whichLabel: " + whichLabel)
-    realLabel = whichLabel.strip()
-    try:
-        os.mkdir(realLabel)
-    except OSError:
-        print ("Creation of the directory %s failed" % realLabel)
-    else:
-        print ("Successfully created the directory %s " % realLabel)
+	def makeLabelDirs(whichLabel):
+	    print("whichLabel: " + whichLabel)
+	    realLabel = whichLabel.strip()
+	    try:
+		os.mkdir(realLabel)
+	    except OSError:
+		print ("Creation of the directory %s failed" % realLabel)
+	    else:
+		print ("Successfully created the directory %s " % realLabel)
 
 
-# Every Lobe-project generates a 'labels.txt' file
-# You can read the txt file and create folders corresponding to the labelnames in that txt-file
-def sortImagesToLabeledFolder():
-    lines = []
-    labelnames = []
-    with open('labels.txt', encoding='utf8') as l:
-        lines = l.readlines()
+# Every Lobe-project generates a 'labels.txt' file. You can read the txt file and create folders corresponding to the labelnames in that txt-file
+	def sortImagesToLabeledFolder():
+	    lines = []
+	    labelnames = []
+	    with open('labels.txt', encoding='utf8') as l:
+		lines = l.readlines()
 
-    count = 0
-    for line in lines:
-        count += 1
-        #print(f'line {count}: {line}')
-        labelnames.append(line)
-        makeLabelDirs(line)
+	    count = 0
+	    for line in lines:
+		count += 1
+		#print(f'line {count}: {line}')
+		labelnames.append(line)
+		makeLabelDirs(line)
 
-sortImagesToLabeledFolder()
+	sortImagesToLabeledFolder()
 
 
 
