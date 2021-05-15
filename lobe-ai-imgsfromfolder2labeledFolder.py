@@ -30,22 +30,25 @@ import shutil # used for copying images to the designated predicted label-folder
 
 import csv #for creating the predictions CSV file
 
+from lobe import ImageModel #the model you've trained using Lobe.ai and exported choosing 'TensorFlow, Use your model in a Python app'
+
+# create a folder for all your results
+os.mkdir('results')
 
 # this is the folder you have to create, where your testset images go
 # you can change 'imgs' to any name you desire
 path1 = "imgs"   
 
-
 # to sort the files into their label-destination folders
 def copyFilesToDestLabelFolders(sourceFile, destination):
     # Copy file to another directory
-    newPath = shutil.copy(sourceFile, destination)
+    newPath = shutil.copy(sourceFile, "./results/" + destination)
     print("Path of copied file : ", newPath)
 
 # define the name of the directory to be created
 def makeLabelDirs(whichLabel):
     print("whichLabel: " + whichLabel)
-    realLabel = whichLabel.strip()
+    realLabel = "./results/" + whichLabel.strip()
     try:
         os.mkdir(realLabel)
     except OSError:
@@ -53,6 +56,9 @@ def makeLabelDirs(whichLabel):
     else:
         print ("Successfully created the directory %s " % realLabel)
 
+# function to check if there are empty files and if it even does exist
+def is_file_empty(file_path):
+    return os.path.exists(file_path) and os.stat(file_path).st_size == 0
 
 # Every Lobe-project generates a 'labels.txt' file
 # You can read the txt file and create folders corresponding to the labelnames in that txt-file
@@ -76,45 +82,49 @@ sortImagesToLabeledFolder()
 ############################################################################################
 # this is where the lobe.ai Model will be put to use to predict a label and assign a score #
 #############################################################################################
-
-from lobe import ImageModel #the model you've trained using Lobe.ai and exported choosing 'TensorFlow, Use your model in a Python app'
-
 model = ImageModel.load('')
 
 # create the CSV file to write the image- & prediction-data into
-with open('predictions/predictions.csv', 'w') as file:
+with open('./results/predictions.csv', 'w') as file:
 	writer = csv.writer(file)
 	writer.writerow(["imgId", "imagePath", "labeledAs", "confidenceScore"])
 
 def createPredictionsCSV(theoutcome):
 
 	#'a' is for append
-	with open('predictions/predictions.csv', 'a') as file:
+	with open('./results/predictions.csv', 'a') as file:
 		writer = csv.writer(file)
 		writer.writerow(theoutcome);
 
-# for opening the folder containing your images
-listing = os.listdir(path1)  
+# for opening the folder containing your images, and filter out everything that isn't jpg
+listing = list(filter(lambda f: f.endswith('.jpg'), os.listdir(path1)))
 
 for pics in listing:
     im = path1 + '/' + pics
-    result = model.predict_from_file(im)
+    
+    # Check if file is empty
+    is_empty = is_file_empty(im)
+    
+    if is_empty:
+        pass
+    else:
+        result = model.predict_from_file(im)
 
-    predList = [pics, im, result.prediction]
+        predList = [pics, im, result.prediction]
 
-    for label, confidence in result.labels:
-    	labelScores = f"{label}: {confidence*100}%"
-    	print(f"{label}: {confidence*100}%")
-    	labelName = (f"{label}")
-    	labelScore = (f"{confidence*100}")
+        for label, confidence in result.labels:
+            labelScores = f"{label}: {confidence*100}%"
+            print(f"{label}: {confidence*100}%")
+            labelName = (f"{label}")
+            labelScore = (f"{confidence*100}")
 
-    	# Since I'm fairly new to Python, I haven't found a way to add all scores for each label to an image.
-    	# This 'if' statement  writes the scores pnly for the predicted label 
-        # it copies the sourcefiles from the original source-folder ('imgs')  to the newly created  & predicted label-named folder:
-        # e.g. all images predicted as "label1" are copied from the source folinto the newly created folder "label1"
-    	if label is result.prediction:
-            print("im" + im)
-            copyFilesToDestLabelFolders(im, label)
-            predList = [pics, im, result.prediction, labelScore]
-            createPredictionsCSV(predList)
+            # Since I'm fairly new to Python, I haven't found a way to add all scores for each label to an image.
+            # This 'if' statement  writes the scores pnly for the predicted label 
+            # it copies the sourcefiles from the original source-folder ('imgs')  to the newly created  & predicted label-named folder:
+            # e.g. all images predicted as "label1" are copied from the source folinto the newly created folder "label1"
+            if label is result.prediction:
+                print("im" + im)
+                copyFilesToDestLabelFolders(im, label)
+                predList = [pics, im, result.prediction, labelScore, labelScore[2]]
+                createPredictionsCSV(predList)
 
