@@ -1,5 +1,7 @@
 # lobe-python-imagesfromfolder2labeledFolder
-Multiple image prediction + CSV output + sort copy of the images into labeled folders
+Batch image prediction + CSV output + sort copy of the images into labeled folders
+
+Updated by Jerry Vermanen on Saturday May 15th
 
 What this Python script does:
 1. Batch process a folder with JPG-images
