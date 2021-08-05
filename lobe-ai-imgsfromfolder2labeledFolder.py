@@ -5,7 +5,7 @@
 # 02. Label each image based on your Lobe-trained CV model
 # 02a - assign a label and confidence score (for that label)
 # 03 Create separate folders based on the labels you used in your model
-# 04 Copy every image to the labeled folder after classifying
+# 04 Copy every image to the designated, labeled folder after classifying
 # 05 Create a CSV-file in the 'predictions' folder, with a new row
 #    for the entire batch of images in the 'imgs'folder, containing per image item / row this data:
 #    - Path to image file
