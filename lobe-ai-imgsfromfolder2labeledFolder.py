@@ -121,7 +121,7 @@ for pics in listing:
             # Since I'm fairly new to Python, I haven't found a way to add all scores for each label to an image.
             # This 'if' statement  writes the scores pnly for the predicted label 
             # it copies the sourcefiles from the original source-folder ('imgs')  to the newly created  & predicted label-named folder:
-            # e.g. all images predicted as "label1" are copied from the source folinto the newly created folder "label1"
+            # e.g. all images predicted as "label1" are copied from the source folder into the newly created folder "label1"
             if label is result.prediction:
                 print("im" + im)
                 copyFilesToDestLabelFolders(im, label)
